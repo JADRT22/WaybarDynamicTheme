@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 # /* ---- 💫 https://github.com/JaKooLit 💫 ---- */  ##
-# Scripts para atualizar waybar, rofi, swaync, wallust com maior flexibilidade
+# Scripts for refreshing waybar, rofi, swaync, wallust with increased flexibility
 
 # =============================================================================
-# CONFIGURAÇÃO DE CAMINHOS
+# PATH CONFIGURATION
 # =============================================================================
 WAYBAR_CONFIG_DIR="$HOME/.config/waybar"
 WAYBAR_CONFIG_FILE="$WAYBAR_CONFIG_DIR/config"
@@ -11,9 +11,9 @@ SCRIPTSDIR="$HOME/.config/hypr/scripts"
 UserScripts="$HOME/.config/hypr/UserScripts"
 
 # =============================================================================
-# 1. MATAR PROCESSOS RODANDO
+# 1. KILL RUNNING PROCESSES
 # =============================================================================
-# Lista de processos a serem reiniciados
+# List of processes to be restarted
 _ps=(waybar rofi swaync ags)
 
 for _prs in "${_ps[@]}"; do
@@ -22,15 +22,15 @@ for _prs in "${_ps[@]}"; do
   fi
 done
 
-# Matar instâncias extras do cava (módulo de áudio da Waybar)
+# Kill extra instances of cava (Waybar audio module)
 if command -v killall >/dev/null; then
     killall cava 2>/dev/null
 fi
 
-# Pequena pausa para garantir o encerramento gracioso
+# Short pause to ensure graceful termination
 sleep 0.5
 
-# Matar na força se ainda estiverem vivos
+# Force kill if still alive
 for _prs in "${_ps[@]}"; do
   if pidof "${_prs}" >/dev/null; then
     killall -9 "${_prs}" 2>/dev/null
@@ -38,38 +38,38 @@ for _prs in "${_ps[@]}"; do
 done
 
 # =============================================================================
-# 2. REINICIAR WAYBAR COM O CONFIG ATUAL
+# 2. RESTART WAYBAR WITH CURRENT CONFIG
 # =============================================================================
 if [ -L "$WAYBAR_CONFIG_FILE" ]; then
     CURRENT_CONFIG=$(readlink -f "$WAYBAR_CONFIG_FILE")
-    # Tenta iniciar a Waybar com o arquivo resolvido
+    # Try starting Waybar with the resolved file
     if [ -f "$CURRENT_CONFIG" ]; then
         waybar -c "$CURRENT_CONFIG" &
     else
-        echo "Aviso: Arquivo vinculado não encontrado: $CURRENT_CONFIG. Usando config padrão."
+        echo "Warning: Linked file not found: $CURRENT_CONFIG. Using default config."
         waybar &
     fi
 else
-    # Caso não seja um link simbólico, tenta o arquivo padrão
+    # If not a symlink, try the default file
     waybar &
 fi
 
 # =============================================================================
-# 3. REINICIAR OUTROS COMPONENTES
+# 3. RESTART OTHER COMPONENTS
 # =============================================================================
 
-# Reiniciar swaync (notificações) se instalado
+# Restart swaync (notifications) if installed
 if command -v swaync >/dev/null; then
     swaync >/dev/null 2>&1 &
 fi
 
-# Recarregar configurações do swaync se o cliente existir
+# Reload swaync settings if the client exists
 if command -v swaync-client >/dev/null; then
     swaync-client --reload-config 2>/dev/null
 fi
 
 # =============================================================================
-# 4. EXECUTAR USER SCRIPTS (EXTENSÕES)
+# 4. EXECUTE USER SCRIPTS (EXTENSIONS)
 # =============================================================================
 if [ -f "${UserScripts}/RainbowBorders.sh" ]; then
   "${UserScripts}/RainbowBorders.sh" &

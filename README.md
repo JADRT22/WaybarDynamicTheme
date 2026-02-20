@@ -1,79 +1,79 @@
 # 🌈 Waybar Dynamic Theme & Layout Preservation
 
 > [!IMPORTANT]
-> **Disclaimer:** Este projeto foi construído inteiramente com IA em cerca de uma hora para pura diversão. Não se destina a ser uma ferramenta séria ou profissional. Espere código bagunçado, possíveis bugs ou lógica de "gambiarra". Fiz isso apenas para o "rice" (personalização do Linux) e para ver o que era possível em uma única sessão!
+> **Disclaimer:** This project was built entirely with AI in about one hour for pure fun. It is NOT intended to be a serious or professional tool. Expect messy code, potential bugs, or "workaround" logic. I did this just for the "rice" (Linux customization) and to see what was possible in a single session!
 
-Este projeto automatiza a extração de cores de wallpapers para o Waybar enquanto garante que as escolhas de **Layout** e **Estilo** do usuário sejam preservadas.
+This project automates wallpaper color extraction for Waybar while ensuring the user's **Layout** and **Style** choices are preserved.
 
-## 📺 Demonstração
+## 📺 Demonstration
 
-### Troca Dinâmica de Cores
+### Dynamic Color Swapping
 ![Dynamic Colors](assets/dynamic-colors.gif)
 
-### Preservação de Layout e Estilos
-| Preservação de Layout | Variação de Estilos |
+### Layout and Style Preservation
+| Layout Preservation | Style Variation |
 | :---: | :---: |
 | ![Layout Preservation](assets/layout-preservation.gif) | ![Style Variation](assets/style-variation.gif) |
 
-## ✨ Funcionalidades
-- **Extração Dinâmica de Cores:** Usa Python e Wallust para gerar temas baseados no wallpaper.
-- **Preservação de Layout:** Mantém o layout ativo da Waybar (ex: Superior, Inferior, Vertical) ao mudar de cor.
-- **Tratamento de Erros Robusto:** Verifica dependências e aguarda daemons estarem prontos antes de aplicar mudanças.
-- **Flexibilidade de Caminhos:** Variáveis de configuração fáceis de editar no topo de cada script.
+## ✨ Features
+- **Dynamic Color Extraction:** Uses Python and Wallust to generate themes based on the wallpaper.
+- **Layout Preservation:** Maintains the active Waybar layout (e.g., Top, Bottom, Vertical) when changing colors.
+- **Robust Error Handling:** Verifies dependencies and waits for daemons to be ready before applying changes.
+- **Path Flexibility:** Easy-to-edit configuration variables at the top of each script.
 
-## 🛠️ Requisitos
-- **Hyprland** (e `swww` para wallpapers)
+## 🛠️ Requirements
+- **Hyprland** (and `swww` for wallpapers)
 - **Waybar**
 - **Wallust** (v3.0+)
 - **Python 3**
 - **Rofi**
-- **ImageMagick** (para extração de cores via Python)
+- **ImageMagick** (for color extraction via Python)
 
-## 📂 Estrutura do Projeto
-- `DynamicLayoutSwitcher.sh`: Script principal para mudar wallpapers e cores.
-- `Refresh.sh`: Reinicia o Waybar preservando o layout e estilo ativos.
-- `dynamic_theme.py`: Script Python auxiliar para processamento extra de cores.
-- `style/dynamic_minimal.css`: Estilo base que importa as cores dinâmicas.
-- `waybar-colors.template`: Template do Wallust para variáveis de cor.
+## 📂 Project Structure
+- `DynamicLayoutSwitcher.sh`: Main script to change wallpapers and colors.
+- `Refresh.sh`: Restarts Waybar while preserving the active layout and style.
+- `dynamic_theme.py`: Helper Python script for extra color processing.
+- `style/dynamic_minimal.css`: Base style that imports dynamic colors.
+- `waybar-colors.template`: Wallust template for color variables.
 
-## 🚀 Guia de Instalação
+## 🚀 Installation Guide
 
-### 1. Clonar o repositório
+### 1. Clone the repository
 ```bash
 git clone https://github.com/JADRT22/WaybarDynamicTheme.git
 cd WaybarDynamicTheme
 ```
 
-### 2. Configurar o Template do Wallust
-Copie o template para sua configuração do Wallust:
+### 2. Setup Wallust Template
+Copy the template to your Wallust config:
 ```bash
 mkdir -p ~/.config/wallust/templates
 cp waybar-colors.template ~/.config/wallust/templates/colors-waybar.css
 ```
 
-Adicione isto ao seu `~/.config/wallust/wallust.toml` sob `[templates]`:
+Add this to your `~/.config/wallust/wallust.toml` under `[templates]`:
 ```toml
 waybar.template = 'colors-waybar.css'
 waybar.target = '~/.config/waybar/wallust/colors-waybar.css'
 ```
 
-### 3. Integração com o Hyprland
-Vincule os scripts à sua pasta de scripts do Hyprland (ex: `~/.config/hypr/scripts/`):
+### 3. Hyprland Integration
+Link the scripts to your Hyprland scripts folder (e.g., `~/.config/hypr/scripts/`):
 ```bash
 cp *.sh *.py ~/.config/hypr/scripts/
 mkdir -p ~/.config/waybar/style
 cp style/*.css ~/.config/waybar/style/
 ```
 
-Adicione um atalho à sua configuração do Hyprland:
+Add a keybind to your Hyprland config:
 ```hypr
 bind = $mainMod, G, exec, ~/.config/hypr/scripts/DynamicLayoutSwitcher.sh
 ```
 
-## 📂 Resolução de Problemas
-- **Pasta de Wallpapers:** O script procura por wallpapers em `$(xdg-user-dir PICTURES)/wallpapers` por padrão. Isso pode ser editado no topo do `DynamicLayoutSwitcher.sh`.
-- **Estilo Dinâmico:** Certifique-se de que seus temas da Waybar importam o arquivo de cores:
-  `@import url("/home/SEU_USUARIO/.config/waybar/wallust/colors-waybar.css");`
+## 📂 Troubleshooting
+- **Wallpaper Folder:** The script looks for wallpapers in `$(xdg-user-dir PICTURES)/wallpapers` by default. This can be edited at the top of `DynamicLayoutSwitcher.sh`.
+- **Dynamic Style:** Ensure your Waybar themes import the colors file:
+  `@import url("/home/YOUR_USER/.config/waybar/wallust/colors-waybar.css");`
 
 ---
-*Aprimorado com assistência de IA em 19 de fev de 2026*
+*Enhanced with AI assistance on Feb 19, 2026*

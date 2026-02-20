@@ -5,11 +5,11 @@ import sys
 import re
 
 def get_dominant_colors(image_path):
-    # Usa ImageMagick para extrair as 5 cores mais comuns
+    # Uses ImageMagick to extract the 5 most common colors
     cmd = f"magick '{image_path}' -resize 100x100 -colors 5 -format '%c' histogram:info:-"
     result = subprocess.check_output(cmd, shell=True).decode()
     
-    # Regex para extrair hex codes
+    # Regex to extract hex codes
     hex_colors = re.findall(r'#[0-9A-Fa-f]{6}', result)
     return hex_colors
 
@@ -19,17 +19,17 @@ def luminance(hex_color):
     return 0.299*r + 0.587*g + 0.114*b
 
 def generate_themes(primary, secondary, wallpaper_path):
-    # Cores derivadas
-    bg = "#1a1b26" # Fundo escuro padrão
-    fg = "#ffffff" # Texto claro padrão
+    # Derived colors
+    bg = "#1a1b26" # Default dark background
+    fg = "#ffffff" # Default light text
     
-    # Se a cor primária for muito escura, ajusta o fundo
+    # If primary color is too dark, adjust background
     if luminance(primary) < 40:
         bg = primary
         primary = secondary 
     
-    # Salva as cores em um arquivo que ambos (Waybar e Rofi) podem ler
-    # Vamos usar um caminho absoluto nos templates para evitar erro de "arquivo não encontrado"
+    # Save colors to a file that both Waybar and Rofi can read
+    # We use an absolute path in templates to avoid "file not found" errors
     
     waybar_color_file = os.path.expanduser("~/.config/waybar/dynamic_colors.css")
     with open(waybar_color_file, "w") as f:
