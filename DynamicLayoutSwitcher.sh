@@ -1,21 +1,46 @@
 #!/usr/bin/env bash
 
-# Corrected paths for your system
+# =============================================================================
+# CONFIGURAÇÃO DE CAMINHOS (EDITE SE NECESSÁRIO)
+# =============================================================================
 WALLPAPER_DIR="$(xdg-user-dir PICTURES)/wallpapers"
 SCRIPTS_DIR="$HOME/.config/hypr/scripts"
 PYTHON_SCRIPT="$SCRIPTS_DIR/dynamic_theme.py"
-WAYBAR_STYLE_DIR="$HOME/.config/waybar/style"
+WAYBAR_CONFIG_DIR="$HOME/.config/waybar"
 ROFI_THEME_DIR="$HOME/.config/rofi/themes"
 
-# 1. Choose Wallpaper
-mapfile -t PICS < <(find "$WALLPAPER_DIR" -type f \( -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.png" -o -iname "*.webp" \))
+# =============================================================================
+# FUNÇÕES DE UTILIDADE
+# =============================================================================
+check_command() {
+    if ! command -v "$1" >/dev/null 2>&1; then
+        notify-send "Erro: Dependência Ausente" "A ferramenta '$1' não foi encontrada. Por favor, instale-a."
+        exit 1
+    fi
+}
 
-if [ ${#PICS[@]} -eq 0 ]; then
-    notify-send "Error" "No wallpapers found in $WALLPAPER_DIR"
+# Verificar dependências essenciais
+check_command "swww"
+check_command "rofi"
+check_command "python3"
+check_command "magick"
+
+# =============================================================================
+# 1. ESCOLHER WALLPAPER
+# =============================================================================
+if [ ! -d "$WALLPAPER_DIR" ]; then
+    notify-send "Erro" "Diretório de wallpapers não encontrado: $WALLPAPER_DIR"
     exit 1
 fi
 
-CHOICE=$(printf "%s\n" "${PICS[@]##*/}" | rofi -dmenu -i -p "Select Wallpaper: ")
+mapfile -t PICS < <(find "$WALLPAPER_DIR" -type f \( -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.png" -o -iname "*.webp" \))
+
+if [ ${#PICS[@]} -eq 0 ]; then
+    notify-send "Erro" "Nenhum wallpaper encontrado em $WALLPAPER_DIR"
+    exit 1
+fi
+
+CHOICE=$(printf "%s\n" "${PICS[@]##*/}" | rofi -dmenu -i -p "Selecione o Wallpaper: ")
 
 if [ -z "$CHOICE" ]; then
     exit 0
@@ -23,39 +48,54 @@ fi
 
 SELECTED_WALL=$(find "$WALLPAPER_DIR" -iname "$CHOICE" -print -quit)
 
-# 2. Set Wallpaper with SWWW
-if pgrep -x "swww-daemon" > /dev/null; then
-    swww img "$SELECTED_WALL" --transition-type grow --transition-pos 0.5,0.5 --transition-fps 60 --transition-duration 2
-else
-    swww-daemon &
-    sleep 1
-    swww img "$SELECTED_WALL"
+if [ ! -f "$SELECTED_WALL" ]; then
+    notify-send "Erro" "O arquivo selecionado não foi encontrado."
+    exit 1
 fi
 
-# 3. Extract Colors with Python (Fallback)
-# Python saves to ~/.config/waybar/dynamic_colors.css
-python3 "$PYTHON_SCRIPT" "$SELECTED_WALL"
+# =============================================================================
+# 2. DEFINIR WALLPAPER COM SWWW
+# =============================================================================
+if ! pgrep -x "swww-daemon" > /dev/null; then
+    swww-daemon &
+    while ! swww query > /dev/null 2>&1; do
+        sleep 0.1
+    done
+fi
 
-# 4. Apply new style to Waybar (COMMENTED TO PRESERVE USER CHOICE)
-# We now leave the style that the user chose in the style menu.
-# ln -sf "$WAYBAR_STYLE_DIR/dynamic_minimal.css" "$HOME/.config/waybar/style.css"
+swww img "$SELECTED_WALL" --transition-type grow --transition-pos 0.5,0.5 --transition-fps 60 --transition-duration 2
 
-# 4.5 Ensure colors are extracted by Wallust (configured for all themes)
+# =============================================================================
+# 3. EXTRAIR CORES E APLICAR TEMAS
+# =============================================================================
+
+# Python para cores customizadas
+if [ -f "$PYTHON_SCRIPT" ]; then
+    python3 "$PYTHON_SCRIPT" "$SELECTED_WALL"
+else
+    echo "Aviso: Script Python não encontrado em $PYTHON_SCRIPT"
+fi
+
+# Wallust para integração sistêmica
 if command -v wallust > /dev/null; then
     wallust run -s "$SELECTED_WALL"
 fi
 
-# 5. Restart Waybar safely
-# We use Refresh.sh to ensure the current layout and style are maintained
-if [ -f "$SCRIPTS_DIR/Refresh.sh" ]; then
-    "$SCRIPTS_DIR/Refresh.sh"
+# =============================================================================
+# 4. REINICIAR WAYBAR COM SEGURANÇA
+# =============================================================================
+REFRESH_SCRIPT="$SCRIPTS_DIR/Refresh.sh"
+
+if [ -f "$REFRESH_SCRIPT" ]; then
+    "$REFRESH_SCRIPT"
 else
-    if pgrep -x "waybar" > /dev/null; then
-        pkill waybar
-        while pgrep -u $USER -x waybar > /dev/null; do sleep 0.1; done
-    fi
+    # Fallback caso o Refresh.sh não exista
+    pkill waybar
+    while pgrep -x waybar > /dev/null; do sleep 0.1; done
     waybar & disown
 fi
 
-# 6. Notify Success
-notify-send "Dynamic Theme" "Wallpaper: $CHOICE"
+# =============================================================================
+# 5. NOTIFICAÇÃO FINAL
+# =============================================================================
+notify-send "Tema Dinâmico" "Wallpaper aplicado: $CHOICE"

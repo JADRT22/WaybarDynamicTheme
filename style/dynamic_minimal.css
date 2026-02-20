@@ -1,0 +1,65 @@
+/* ---- 💫 Estilo Dinâmico por Gemini 💫 ---- */
+/* Importando as cores do caminho absoluto para evitar erros */
+@import url("/home/fernando/.config/waybar/wallust/colors-waybar.css");
+
+* {
+    font-family: "JetBrainsMono Nerd Font";
+    font-weight: bold;
+    font-size: 14px;
+}
+
+window#waybar {
+    background: rgba(15, 15, 15, 0.85);
+    border-bottom: 3px solid @primary;
+    color: white;
+}
+
+#workspaces button {
+    padding: 0 5px;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+#workspaces button.active {
+    color: @primary;
+    border-bottom: 2px solid @primary;
+}
+
+#workspaces button.focused {
+    color: @secondary;
+}
+
+#clock, #battery, #cpu, #memory, #network, #pulseaudio, #tray {
+    padding: 0 10px;
+    margin: 5px 0;
+}
+
+#clock {
+    color: @primary;
+}
+
+#battery {
+    color: @secondary;
+}
+
+#pulseaudio {
+    color: @primary;
+}
+#tray {
+    padding: 0 10px;
+}
+#custom-menu {
+    color: @primary;
+    padding: 0 10px;
+}
+#window {
+    color: @foreground;
+}
+#network {
+    color: @primary;
+}
+#cpu {
+    color: @secondary;
+}
+#memory {
+    color: @primary;
+}
