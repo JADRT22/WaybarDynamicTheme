@@ -2,6 +2,17 @@
 
 All notable changes to the **WaybarDynamicTheme** project will be documented in this file.
 
+## [v3.1.0] - 2026-02-20
+### Added
+- **Unified Master Script:** Merged all core logic into a single high-performance script: `WaybarTheme.sh`.
+- **Command-Line Interface (CLI):** Support for direct task execution via flags: `--refresh`, `--switch`, and `--layout`.
+- **Backward Compatibility:** `setup.sh` now creates symlinks for legacy script names (`Refresh.sh`, `WaybarDynamicHub.sh`), preventing breakage of existing user keybinds.
+
+### Changed
+- **Architecture Cleanup:** Deleted redundant legacy scripts to maintain a clean and professional repository structure.
+- **Improved Installation:** Enhanced `setup.sh` with robust symlinking and centralized script management.
+- **Workflow Efficiency:** Internal Hub functions now call local code blocks instead of separate files, resulting in faster execution.
+
 ## [v3.0.0] - 2026-02-20
 ### Added
 - **Waybar Dynamic Hub:** A central Rofi-based management menu (`WaybarDynamicHub.sh`) to control all theme features.
