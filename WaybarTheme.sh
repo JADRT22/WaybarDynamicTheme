@@ -98,11 +98,13 @@ switch_wallpaper() {
 "
     done < <(find "$WALLPAPER_DIR" -type f \( -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.png" -o -iname "*.webp" \) | sort)
 
-    # Show visual menu with a larger preview layout
+    # Show visual menu with a larger preview layout and clear names
     choice=$(echo -e "$rofi_input" | rofi -dmenu -i -p "󰸉 Select Wallpaper" \
-        -show-icons -theme-str 'element-icon { size: 12ch; }' \
-        -theme-str 'listview { columns: 2; lines: 5; }' \
-        -theme-str 'window { width: 50ch; }' \
+        -show-icons -theme-str 'element { orientation: vertical; text-align: center; }' \
+        -theme-str 'element-icon { size: 15ch; }' \
+        -theme-str 'element-text { horizontal-align: 0.5; }' \
+        -theme-str 'listview { columns: 3; lines: 2; }' \
+        -theme-str 'window { width: 90ch; }' \
         -config "$ROFI_CONFIG")
     
     [ -z "$choice" ] && return
