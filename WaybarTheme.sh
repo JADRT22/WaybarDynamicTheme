@@ -102,15 +102,22 @@ switch_wallpaper() {
     done < <(find "$WALLPAPER_DIR" -type f \( -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.png" -o -iname "*.webp" \) | sort)
 
     # Show visual menu with a larger preview layout and clear names
-    choice=$(echo -e "$rofi_input" | rofi -dmenu -i -p "󰸉 Select Wallpaper" \
+    # Remembering last selected row for Fernando
+    choice_info=$(echo -e "$rofi_input" | rofi -dmenu -i -p "󰸉 Select Wallpaper" \
         -show-icons -theme-str 'element { orientation: vertical; text-align: center; }' \
         -theme-str 'element-icon { size: 15ch; }' \
         -theme-str 'element-text { horizontal-align: 0.5; }' \
         -theme-str 'listview { columns: 3; lines: 2; }' \
         -theme-str 'window { width: 90ch; }' \
+        -selected-row "${LAST_WALLPAPER_INDEX:-0}" \
+        -format "i s" \
         -config "$ROFI_CONFIG")
     
-    [ -z "$choice" ] && return
+    [ -z "$choice_info" ] && return
+
+    # Extract index and choice
+    selected_index=$(echo "$choice_info" | awk '{print $1}')
+    choice=$(echo "$choice_info" | cut -d' ' -f2-)
 
     selected_wall=$(find "$WALLPAPER_DIR" -iname "$choice" -print -quit)
     [ -z "$selected_wall" ] && exit 1
@@ -126,6 +133,7 @@ switch_wallpaper() {
 
     # Save and Apply
     update_config "LAST_WALLPAPER" "$selected_wall"
+    update_config "LAST_WALLPAPER_INDEX" "$selected_index"
     wallust run -s "$selected_wall" > /dev/null 2>&1
     refresh_ui
     notify-send -i checkbox-checked-symbolic "Theme" "Wallpaper updated!"
@@ -134,10 +142,19 @@ switch_wallpaper() {
 # 3. SELECT WAYBAR LAYOUT
 switch_layout() {
     [ ! -d "$WAYBAR_LAYOUTS_DIR" ] && return
-    layouts=$(ls "$WAYBAR_LAYOUTS_DIR" | sort)
-    choice=$(echo -e "$layouts" | rofi -dmenu -i -p "󰕮 Choose Layout" -config "$ROFI_CONFIG")
     
-    if [ ! -z "$choice" ] && [ -f "$WAYBAR_LAYOUTS_DIR/$choice" ]; then
+    # Prepara a lista com a opção de voltar
+    layouts=$(ls "$WAYBAR_LAYOUTS_DIR" | sort)
+    options="󰌍 Back to Hub\n$layouts"
+    
+    choice=$(echo -e "$options" | rofi -dmenu -i -p "󰕮 Choose Layout" -config "$ROFI_CONFIG")
+    
+    if [ -z "$choice" ] || [ "$choice" == "󰌍 Back to Hub" ]; then
+        show_hub
+        return
+    fi
+    
+    if [ -f "$WAYBAR_LAYOUTS_DIR/$choice" ]; then
         ln -sf "$WAYBAR_LAYOUTS_DIR/$choice" "$WAYBAR_CONFIG_FILE"
         update_config "WAYBAR_LAYOUT" "$choice"
         refresh_ui
@@ -148,12 +165,19 @@ switch_layout() {
 # --- MENU FUNCTIONS ---
 
 show_transition_menu() {
-    options="󰈈 Random\n󰈈 Grow\n󰈈 Wipe\n󰈈 Wave\n󰈈 Center\n󰈈 Outer"
+    options="󰌍 Back to Hub\n󰈈 Random\n󰈈 Grow\n󰈈 Wipe\n󰈈 Wave\n󰈈 Center\n󰈈 Outer"
     choice=$(echo -e "$options" | rofi -dmenu -i -p "󰵚 Transition" -config "$ROFI_CONFIG")
+    
+    if [ -z "$choice" ] || [ "$choice" == "󰌍 Back to Hub" ]; then
+        show_hub
+        return
+    fi
+
     if [ ! -z "$choice" ]; then
         new_type=$(echo "$choice" | awk '{print tolower($2)}')
         update_config "TRANSITION_TYPE" "$new_type"
         notify-send "Theme" "Transition set to: $new_type"
+        show_hub # Volta ao hub após selecionar
     fi
 }
 
