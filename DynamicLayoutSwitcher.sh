@@ -13,6 +13,13 @@ SCRIPTS_DIR="$HOME/.config/hypr/scripts"
 WAYBAR_CONFIG_DIR="$HOME/.config/waybar"
 ROFI_CONFIG="$HOME/.config/rofi/config.rasi"
 
+# --- PREMIUM TRANSITION SETTINGS ---
+# Options: none, grow, wipe, wave, center, outer, any, random
+TRANSITION_TYPE="random"
+TRANSITION_FPS=60
+TRANSITION_DURATION=2
+TRANSITION_STEP=90
+
 # --- UTILITY FUNCTIONS ---
 check_command() {
     if ! command -v "$1" >/dev/null 2>&1; then
@@ -68,13 +75,25 @@ fi
 # =============================================================================
 notify-send -i image-jpeg "Dynamic Theme" "Applying colors for: $CHOICE"
 
-# Set wallpaper with smooth transition
+# Set wallpaper with smooth premium transition
 if ! pgrep -x "swww-daemon" > /dev/null; then
     swww-daemon &
     sleep 0.5
 fi
 
-swww img "$SELECTED_WALL" --transition-type grow --transition-pos 0.5,0.5 --transition-fps 60 --transition-duration 2
+# Determine transition effect (if random, pick one)
+EFFECT=$TRANSITION_TYPE
+if [ "$TRANSITION_TYPE" = "random" ]; then
+    EFFECTS=("grow" "wipe" "wave" "center" "outer" "any")
+    EFFECT=${EFFECTS[$RANDOM % ${#EFFECTS[@]}]}
+fi
+
+swww img "$SELECTED_WALL" \
+    --transition-type "$EFFECT" \
+    --transition-pos 0.5,0.5 \
+    --transition-fps "$TRANSITION_FPS" \
+    --transition-duration "$TRANSITION_DURATION" \
+    --transition-step "$TRANSITION_STEP"
 
 # Generate colors with Wallust (quiet mode)
 wallust run -s "$SELECTED_WALL" > /dev/null 2>&1

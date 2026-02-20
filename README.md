@@ -1,7 +1,7 @@
 # 🌈 Waybar Dynamic Theme & Layout Preservation
 
-> [!NOTE]
-> **Project Status:** This project began as a fun AI-driven experiment in a single session. However, due to its potential and personal use, I am now evolving it into a more serious tool for Linux customization. Please keep in mind that much of the core logic was AI-assisted and development happens in my spare time as it is not my primary focus. Expect continuous improvements, but also the occasional "experimental" quirk!
+> [!IMPORTANT]
+> **AI-Powered & Community Driven:** This project was built entirely using AI to solve a personal customization challenge. I am now sharing it with the community and plan to add many more features! Please note that as an AI-assisted project, updates may take time and occasionally introduce bugs, but I am committed to its serious development.
 
 This project automates wallpaper color extraction for Waybar, Rofi, and Terminals (Kitty/Ghostty) while ensuring the user's **Layout** and **Style** choices are preserved.
 
