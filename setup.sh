@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
 
 # =============================================================================
-# WAYBAR DYNAMIC THEME - INSTALLATION SCRIPT (v3.1)
+# WAYBAR DYNAMIC THEME - INSTALLATION SCRIPT (v3.3)
 # Description: Automates the setup of WaybarDynamicTheme, Wallust, and Hyprland.
 # Author: JADRT22 (Fernando)
 # =============================================================================
 
 # --- PATH CONFIGURATION ---
-REPO_DIR=$(pwd)
+REPO_DIR="$(pwd)"
 CONFIG_DIR="$HOME/.config/WaybarDynamicTheme"
 WALLUST_TEMPLATES_DIR="$HOME/.config/wallust/templates"
 HYPR_SCRIPTS_DIR="$HOME/.config/hypr/scripts"
@@ -26,6 +26,7 @@ echo -e "==========================================${NC}"
 # --- 1. DEPENDENCY CHECK ---
 echo -e "\n${YELLOW}[1/4] Checking dependencies...${NC}"
 deps=("swww" "rofi" "waybar" "wallust")
+missing_deps=0
 for dep in "${deps[@]}"; do
     if ! command -v "$dep" >/dev/null 2>&1; then
         echo -e "${RED}✘ Error: '$dep' is not installed.${NC}"
@@ -71,15 +72,18 @@ if [ -f "$REPO_DIR/$script" ]; then
     chmod +x "$REPO_DIR/$script"
     # Link to Hyprland scripts
     ln -sf "$REPO_DIR/$script" "$HYPR_SCRIPTS_DIR/$script"
-    # Create convenient command links
+    # Create convenient command links for backward compatibility
     ln -sf "$REPO_DIR/$script" "$HYPR_SCRIPTS_DIR/WaybarDynamicHub.sh"
     ln -sf "$REPO_DIR/$script" "$HYPR_SCRIPTS_DIR/Refresh.sh"
     echo -e "${GREEN}✔ Linked: $script -> $HYPR_SCRIPTS_DIR/$script${NC}"
+else
+    echo -e "${RED}✘ Error: $script not found. Run this script from the repository root.${NC}"
+    exit 1
 fi
 
 # --- FINAL STEPS ---
 echo -e "\n${BLUE}=========================================="
-echo -e "   ✨ Installation Complete!"
+echo -e "   ✨ Installation Complete (v3.3)!"
 echo -e "==========================================${NC}"
 echo -e "Next steps:"
 echo -e "1. Update your '~/.config/wallust/wallust.toml' to use the new templates."

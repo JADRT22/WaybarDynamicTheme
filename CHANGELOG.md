@@ -2,6 +2,21 @@
 
 All notable changes to the **WaybarDynamicTheme** project will be documented in this file.
 
+## [v3.3.0] - 2026-02-20
+### Added
+- **Premium Rofi Previews:** Redesigned the wallpaper picker with a 3-column gallery layout and large thumbnails.
+- **Enhanced Configuration:** Added "Full Config Example" to the README for easier setup.
+- **Improved Metadata:** Updated internal versioning to v3.3 across all scripts and UI components.
+
+### Changed
+- **Security & Stability:** Added robust variable quoting and improved path handling to prevent errors with special characters or spaces.
+- **Config Management:** Refactored `update_config` for more reliable persistence across reboots.
+- **Refresh Logic:** Improved Waybar restart logic to handle symlinks more gracefully.
+
+### Fixed
+- **Version Mismatch:** Fixed "Project Info" showing outdated version numbers.
+- **GTK Refreshing:** Corrected a bug where GTK theme reloading could fail on some environments.
+
 ## [v3.1.0] - 2026-02-20
 ### Added
 - **Unified Master Script:** Merged all core logic into a single high-performance script: `WaybarTheme.sh`.

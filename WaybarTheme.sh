@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # =============================================================================
-# WAYBAR DYNAMIC THEME - ALL-IN-ONE SCRIPT (v3.1)
+# WAYBAR DYNAMIC THEME - ALL-IN-ONE SCRIPT (v3.3)
 # Description: Centralized management for wallpaper, layouts, and UI refresh.
 # Author: JADRT22 (Fernando)
 # =============================================================================
@@ -31,11 +31,11 @@ update_config() {
     local key="$1"
     local value="$2"
     if [ ! -f "$CONFIG_FILE" ]; then
-        echo "$key="$value"" > "$CONFIG_FILE"
-    elif grep -q "^$key=" "$CONFIG_FILE"; then
-        sed -i "s|^$key=.*|$key="$value"|" "$CONFIG_FILE"
+        echo "${key}=\"${value}\"" > "$CONFIG_FILE"
+    elif grep -q "^${key}=" "$CONFIG_FILE"; then
+        sed -i "s|^${key}=.*|${key}=\"${value}\"|" "$CONFIG_FILE"
     else
-        echo "$key="$value"" >> "$CONFIG_FILE"
+        echo "${key}=\"${value}\"" >> "$CONFIG_FILE"
     fi
 }
 
@@ -73,7 +73,11 @@ refresh_ui() {
     # Restart Waybar
     if [ -L "$WAYBAR_CONFIG_FILE" ]; then
         current_config=$(readlink -f "$WAYBAR_CONFIG_FILE")
-        waybar -c "$current_config" &
+        if [ -f "$current_config" ]; then
+            waybar -c "$current_config" &
+        else
+            waybar &
+        fi
     else
         waybar &
     fi
@@ -94,8 +98,7 @@ switch_wallpaper() {
     rofi_input=""
     while IFS= read -r pic; do
         name="${pic##*/}"
-        rofi_input+="${name}\0icon\x1f${pic}
-"
+        rofi_input+="${name}\0icon\x1f${pic}\n"
     done < <(find "$WALLPAPER_DIR" -type f \( -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.png" -o -iname "*.webp" \) | sort)
 
     # Show visual menu with a larger preview layout and clear names
@@ -110,6 +113,8 @@ switch_wallpaper() {
     [ -z "$choice" ] && return
 
     selected_wall=$(find "$WALLPAPER_DIR" -iname "$choice" -print -quit)
+    [ -z "$selected_wall" ] && exit 1
+    
     notify-send -i image-jpeg "Theme" "Applying colors for: $choice"
 
     # SWWW Transition
@@ -143,12 +148,7 @@ switch_layout() {
 # --- MENU FUNCTIONS ---
 
 show_transition_menu() {
-    options="󰈈 Random
-󰈈 Grow
-󰈈 Wipe
-󰈈 Wave
-󰈈 Center
-󰈈 Outer"
+    options="󰈈 Random\n󰈈 Grow\n󰈈 Wipe\n󰈈 Wave\n󰈈 Center\n󰈈 Outer"
     choice=$(echo -e "$options" | rofi -dmenu -i -p "󰵚 Transition" -config "$ROFI_CONFIG")
     if [ ! -z "$choice" ]; then
         new_type=$(echo "$choice" | awk '{print tolower($2)}')
@@ -158,11 +158,7 @@ show_transition_menu() {
 }
 
 show_hub() {
-    options="󰸉 Select Wallpaper
-󰕮 Select Bar Layout
-󰵚 Transition Animations
-󰑐 Refresh Theme
-󰒓 Project Info"
+    options="󰸉 Select Wallpaper\n󰕮 Select Bar Layout\n󰵚 Transition Animations\n󰑐 Refresh Theme\n󰒓 Project Info"
     choice=$(echo -e "$options" | rofi -dmenu -i -p "󱄄 Theme Hub" -config "$ROFI_CONFIG")
     
     case "$choice" in
@@ -170,8 +166,7 @@ show_hub() {
         *"Select Bar Layout"*) switch_layout ;;
         *"Transition Animations"*) show_transition_menu ;;
         *"Refresh Theme"*) refresh_ui && notify-send "Theme" "System refreshed!" ;;
-        *"Project Info"*) notify-send "Waybar Dynamic Theme" "Version 3.1
-Created by JADRT22" ;;
+        *"Project Info"*) notify-send "Waybar Dynamic Theme" "Version 3.3\nCreated by JADRT22" ;;
     esac
 }
 
