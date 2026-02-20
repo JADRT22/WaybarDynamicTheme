@@ -68,16 +68,16 @@ done
 # --- 4. LINK UNIFIED SCRIPT ---
 echo -e "\n${YELLOW}[4/4] Linking Unified Script...${NC}"
 script="WaybarTheme.sh"
-if [ -f "$REPO_DIR/$script" ]; then
-    chmod +x "$REPO_DIR/$script"
+if [ -f "$REPO_DIR/scripts/$script" ]; then
+    chmod +x "$REPO_DIR/scripts/$script"
     # Link to Hyprland scripts
-    ln -sf "$REPO_DIR/$script" "$HYPR_SCRIPTS_DIR/$script"
+    ln -sf "$REPO_DIR/scripts/$script" "$HYPR_SCRIPTS_DIR/$script"
     # Create convenient command links for backward compatibility
-    ln -sf "$REPO_DIR/$script" "$HYPR_SCRIPTS_DIR/WaybarDynamicHub.sh"
-    ln -sf "$REPO_DIR/$script" "$HYPR_SCRIPTS_DIR/Refresh.sh"
-    echo -e "${GREEN}✔ Linked: $script -> $HYPR_SCRIPTS_DIR/$script${NC}"
+    ln -sf "$REPO_DIR/scripts/$script" "$HYPR_SCRIPTS_DIR/WaybarDynamicHub.sh"
+    ln -sf "$REPO_DIR/scripts/$script" "$HYPR_SCRIPTS_DIR/Refresh.sh"
+    echo -e "${GREEN}✔ Linked: scripts/$script -> $HYPR_SCRIPTS_DIR/$script${NC}"
 else
-    echo -e "${RED}✘ Error: $script not found. Run this script from the repository root.${NC}"
+    echo -e "${RED}✘ Error: scripts/$script not found. Run this script from the repository root.${NC}"
     exit 1
 fi
 

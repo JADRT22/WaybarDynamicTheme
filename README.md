@@ -60,7 +60,7 @@ bind = $mainMod, R, exec, ~/.config/hypr/scripts/WaybarTheme.sh --refresh
 ```
 
 ## 📂 Architecture
-- `WaybarTheme.sh`: The unified script that handles all tasks (Refresh, Wallpaper Switcher, Layout Selector, and Hub).
+- `scripts/WaybarTheme.sh`: The unified script that handles all tasks (Refresh, Wallpaper Switcher, Layout Selector, and Hub).
 - `setup.sh`: Streamlined installation and environment setup.
 - `*.template`: Wallust templates for various system components.
 

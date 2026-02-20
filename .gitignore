@@ -1,0 +1,22 @@
+# WaybarDynamicTheme - Git Ignore
+
+# User local config (Private)
+config.conf
+
+# Log files
+*.log
+
+# Temporary files
+*.tmp
+*.bak
+*.swp
+
+# OS generated files
+.DS_Store
+.directory
+Thumbs.db
+
+# Project temporary files
+release.json
+release_v4.json
+release_v4_fixed.json
