@@ -37,14 +37,16 @@ chmod +x setup.sh
 Ensure your `~/.config/wallust/wallust.toml` includes the provided templates to enable full system syncing. Refer to the project files for the complete template list.
 
 ### 3. Usage
-Add a keybind to your Hyprland configuration to access the Hub:
+Add these keybinds to your Hyprland configuration (`~/.config/hypr/UserConfigs/UserKeybinds.conf`):
 ```hypr
-# Open the main hub
-bind = $mainMod, G, exec, ~/.config/hypr/scripts/WaybarTheme.sh
+# Direct wallpaper switcher (Visual Picker)
+bind = $mainMod, G, exec, ~/.config/hypr/scripts/WaybarTheme.sh --switch
 
-# Other direct commands (optional)
+# Full Management Hub (Layouts, Transitions, etc.)
+bind = $mainMod SHIFT, H, exec, ~/.config/hypr/scripts/WaybarTheme.sh --hub
+
+# Optional: Direct UI refresh
 bind = $mainMod, R, exec, ~/.config/hypr/scripts/WaybarTheme.sh --refresh
-bind = $mainMod, W, exec, ~/.config/hypr/scripts/WaybarTheme.sh --switch
 ```
 
 ## 📂 Architecture
