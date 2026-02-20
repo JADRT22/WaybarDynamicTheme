@@ -5,6 +5,16 @@
 
 Automate your Hyprland aesthetic with dynamic color extraction and seamless layout preservation.
 
+## 📺 Demonstration
+
+### Dynamic Color Swapping
+![Dynamic Colors](assets/dynamic-colors.gif)
+
+### Layout and Style Preservation
+| Bar Layout Switcher | GTK & Hyprland Sync |
+| :---: | :---: |
+| ![Layout Preservation](assets/layout-preservation.gif) | ![Style Variation](assets/style-variation.gif) |
+
 ## 📖 Overview
 **Waybar Dynamic Theme** is a comprehensive customization suite designed for Hyprland users. It synchronizes your entire system's color palette with your wallpaper using **Wallust**, while uniquely ensuring that your Waybar layouts and styles remain intact during the transition.
 
