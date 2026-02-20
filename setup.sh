@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # =============================================================================
-# WAYBAR DYNAMIC THEME - INSTALLATION SCRIPT (v3.3)
+# WAYBAR DYNAMIC THEME - INSTALLATION SCRIPT (v4.0)
 # Description: Automates the setup of WaybarDynamicTheme, Wallust, and Hyprland.
 # Author: JADRT22 (Fernando)
 # =============================================================================
@@ -83,7 +83,7 @@ fi
 
 # --- FINAL STEPS ---
 echo -e "\n${BLUE}=========================================="
-echo -e "   ✨ Installation Complete (v3.3)!"
+echo -e "   ✨ Installation Complete (v4.0)!"
 echo -e "==========================================${NC}"
 echo -e "Next steps:"
 echo -e "1. Update your '~/.config/wallust/wallust.toml' to use the new templates."

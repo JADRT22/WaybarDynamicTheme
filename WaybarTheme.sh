@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # =============================================================================
-# WAYBAR DYNAMIC THEME - ALL-IN-ONE SCRIPT (v3.3)
+# WAYBAR DYNAMIC THEME - ALL-IN-ONE SCRIPT (v4.0)
 # Description: Centralized management for wallpaper, layouts, and UI refresh.
 # Author: JADRT22 (Fernando)
 # =============================================================================
@@ -166,7 +166,7 @@ show_hub() {
         *"Select Bar Layout"*) switch_layout ;;
         *"Transition Animations"*) show_transition_menu ;;
         *"Refresh Theme"*) refresh_ui && notify-send "Theme" "System refreshed!" ;;
-        *"Project Info"*) notify-send "Waybar Dynamic Theme" "Version 3.3\nCreated by JADRT22" ;;
+        *"Project Info"*) notify-send "Waybar Dynamic Theme" "Version 4.0\nCreated by JADRT22" ;;
     esac
 }
 
