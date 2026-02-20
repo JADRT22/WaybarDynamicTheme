@@ -1,9 +1,9 @@
-# 🌈 Waybar Dynamic Theme & Layout Preservation
+# 🌈 Waybar Dynamic Theme & Layout Preservation (v3.0)
 
 > [!IMPORTANT]
-> **AI-Powered & Community Driven:** This project was built entirely using AI to solve a personal customization challenge. I am now sharing it with the community and plan to add many more features! Please note that as an AI-assisted project, updates may take time and occasionally introduce bugs, but I am committed to its serious development.
+> **AI-Powered & Community Driven:** This project was built using AI to solve a personal customization challenge. I am now sharing it with the community! This version 3.0 is a major leap forward, introducing a central management hub and deeper system integration.
 
-This project automates wallpaper color extraction for Waybar, Rofi, and Terminals (Kitty/Ghostty) while ensuring the user's **Layout** and **Style** choices are preserved.
+This project automates wallpaper color extraction for **Waybar**, **Hyprland**, **Rofi**, **Terminals (Kitty/Ghostty)**, and **GTK Apps** while ensuring the user's **Layout** and **Style** choices are preserved.
 
 ## 📺 Demonstration
 
@@ -11,30 +11,30 @@ This project automates wallpaper color extraction for Waybar, Rofi, and Terminal
 ![Dynamic Colors](assets/dynamic-colors.gif)
 
 ### Layout and Style Preservation
-| Layout Preservation | Style Variation |
+| Bar Layout Switcher | GTK & Hyprland Sync |
 | :---: | :---: |
 | ![Layout Preservation](assets/layout-preservation.gif) | ![Style Variation](assets/style-variation.gif) |
 
-## ✨ Features
-- **Dynamic Color Extraction:** Uses **Wallust** (v3.0+) to generate themes based on the wallpaper.
-- **Terminal Sync:** Automatically updates colors for **Kitty** and **Ghostty**.
-- **UI Sync:** Updates **Waybar** and **Rofi** styles dynamically.
-- **Layout Preservation:** Maintains the active Waybar layout (e.g., Top, Bottom, Vertical) when changing colors.
-- **Robust Error Handling:** Verifies dependencies and waits for daemons to be ready before applying changes.
+## ✨ Features (v3.0)
+- **󱄄 Central Theme Hub:** A dedicated Rofi-based menu to manage all theme aspects.
+- **󰕮 Bar Layout Switcher:** Instantaneously switch between multiple Waybar layouts while keeping the current wallpaper colors.
+- **󰵚 Transition Animations:** Choose from 6 different SWWW transition effects (Grow, Wipe, Wave, etc.) directly from the Hub.
+- **󰸉 Visual Wallpaper Picker:** Browse and select wallpapers with thumbnails via Rofi.
+- **🎨 Deep System Sync:** 
+  - **Hyprland:** Dynamic window borders and shadows.
+  - **GTK 3.0/4.0:** Real-time color updates for apps like Thunar and Nautilus.
+  - **Terminals:** Support for Kitty and Ghostty.
+  - **Rofi & SwayNC:** Fully themed notification center and menus.
+- **⚙️ Config Persistence:** Saves your last wallpaper and bar layout choices.
 
 ## 🛠️ Requirements
 - **Hyprland** (and `swww` for wallpapers)
 - **Waybar**
 - **Wallust** (v3.0+)
 - **Rofi**
+- **Gsettings** (for GTK theme reloading)
 
-## 📂 Project Structure
-- `DynamicLayoutSwitcher.sh`: Main script to change wallpapers and colors via Rofi menu.
-- `Refresh.sh`: Restarts Waybar while preserving the active layout and style.
-- `waybar-colors.template`: Wallust template for Waybar color variables.
-- `rofi-colors.template`: Wallust template for Rofi theme variables.
-
-## 🚀 Installation Guide
+## 🚀 Easy Installation Guide
 
 ### 1. Clone the repository
 ```bash
@@ -42,36 +42,54 @@ git clone https://github.com/JADRT22/WaybarDynamicTheme.git
 cd WaybarDynamicTheme
 ```
 
-### 2. Setup Wallust Templates
-Copy the templates to your Wallust config:
+### 2. Run the Installer
 ```bash
-mkdir -p ~/.config/wallust/templates
-cp *.template ~/.config/wallust/templates/
+chmod +x setup.sh
+./setup.sh
 ```
+*This script links all templates to `~/.config/wallust/templates/` and scripts to `~/.config/hypr/scripts/`.*
 
+### 3. Wallust Templates Setup
 Add this to your `~/.config/wallust/wallust.toml` under `[templates]`:
 ```toml
 [templates]
-waybar.template = 'waybar-colors.template'
-waybar.target = '~/.config/waybar/wallust/colors-waybar.css'
+cava.template = 'colors-cava'
+cava.target = '~/.config/cava/config'
 
-rofi.template = 'rofi-colors.template'
+hypr.template = 'colors-hyprland.conf'
+hypr.target = '~/.config/hypr/wallust/wallust-hyprland.conf'
+
+rofi.template = 'colors-rofi.rasi'
 rofi.target = '~/.config/rofi/wallust/colors-rofi.rasi'
 
-kitty.template = 'colors-kitty.conf' # Ensure you have this template
+waybar.template = 'colors-waybar.css'
+waybar.target = '~/.config/waybar/wallust/colors-waybar.css'
+
+kitty.template = 'colors-kitty.conf'
 kitty.target = '~/.config/kitty/kitty-themes/01-Wallust.conf'
+
+ghostty.template = 'colors-ghostty.conf'
+ghostty.target = '~/.config/ghostty/wallust.conf'
+
+gtk3.template = 'gtk-colors.template'
+gtk3.target = '~/.config/gtk-3.0/colors.css'
+
+gtk4.template = 'gtk-colors.template'
+gtk4.target = '~/.config/gtk-4.0/colors.css'
 ```
 
-### 3. Hyprland Integration
-Link the scripts to your Hyprland scripts folder:
-```bash
-cp *.sh ~/.config/hypr/scripts/
-```
-
-Add a keybind to your Hyprland config:
+### 4. Hyprland Keybind
+Add this keybind to your Hyprland configuration (`~/.config/hypr/hyprland.conf`):
 ```hypr
-bind = $mainMod, G, exec, ~/.config/hypr/scripts/DynamicLayoutSwitcher.sh
+bind = $mainMod, G, exec, ~/.config/hypr/scripts/WaybarDynamicHub.sh
 ```
+
+## 📂 Project Structure
+- `WaybarDynamicHub.sh`: Main management menu.
+- `DynamicLayoutSwitcher.sh`: Core script for wallpaper selection and color application.
+- `Refresh.sh`: Gracefully restarts UI components and reloads GTK CSS.
+- `setup.sh`: Automated installation script.
+- `*.template`: Pre-configured Wallust templates for various system components.
 
 ---
-*Enhanced with AI assistance on Feb 20, 2026*
+*Developed by JADRT22 - Enhanced with AI assistance on Feb 20, 2026*

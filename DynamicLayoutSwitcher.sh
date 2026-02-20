@@ -4,21 +4,26 @@
 # WAYBAR DYNAMIC THEME - MAIN SCRIPT
 # Description: Choose wallpaper via Rofi and apply dynamic colors via Wallust.
 # Author: JADRT22 (Fernando)
-# Enhanced with AI assistance
 # =============================================================================
 
 # --- PATH CONFIGURATION ---
 WALLPAPER_DIR="$(xdg-user-dir PICTURES)/wallpapers"
+PROJECT_DIR="$HOME/Projetos/WaybarDynamicTheme"
 SCRIPTS_DIR="$HOME/.config/hypr/scripts"
 WAYBAR_CONFIG_DIR="$HOME/.config/waybar"
 ROFI_CONFIG="$HOME/.config/rofi/config.rasi"
+CONFIG_FILE="$HOME/.config/WaybarDynamicTheme/config.conf"
 
-# --- PREMIUM TRANSITION SETTINGS ---
-# Options: none, grow, wipe, wave, center, outer, any, random
+# --- DEFAULT PREMIUM TRANSITION SETTINGS ---
 TRANSITION_TYPE="random"
 TRANSITION_FPS=60
 TRANSITION_DURATION=2
 TRANSITION_STEP=90
+
+# Source current config if exists
+if [ -f "$CONFIG_FILE" ]; then
+    source "$CONFIG_FILE"
+fi
 
 # --- UTILITY FUNCTIONS ---
 check_command() {
@@ -33,6 +38,20 @@ check_command "swww"
 check_command "rofi"
 check_command "wallust"
 
+# Function to update config file
+update_config() {
+    local key="$1"
+    local value="$2"
+    mkdir -p "$(dirname "$CONFIG_FILE")"
+    if [ ! -f "$CONFIG_FILE" ]; then
+        echo "$key=\"$value\"" > "$CONFIG_FILE"
+    elif grep -q "^$key=" "$CONFIG_FILE"; then
+        sed -i "s|^$key=.*|$key=\"$value\"|" "$CONFIG_FILE"
+    else
+        echo "$key=\"$value\"" >> "$CONFIG_FILE"
+    fi
+}
+
 # =============================================================================
 # 1. CHOOSE WALLPAPER (VISUAL INTERFACE WITH PREVIEWS)
 # =============================================================================
@@ -42,7 +61,6 @@ if [ ! -d "$WALLPAPER_DIR" ]; then
 fi
 
 # Prepare Rofi input with thumbnails
-# Format: "Filename\0icon\x1f/full/path/to/image"
 ROFI_INPUT=""
 while IFS= read -r pic; do
     name="${pic##*/}"
@@ -75,13 +93,13 @@ fi
 # =============================================================================
 notify-send -i image-jpeg "Dynamic Theme" "Applying colors for: $CHOICE"
 
-# Set wallpaper with smooth premium transition
+# Ensure swww-daemon is running
 if ! pgrep -x "swww-daemon" > /dev/null; then
     swww-daemon &
     sleep 0.5
 fi
 
-# Determine transition effect (if random, pick one)
+# Determine transition effect
 EFFECT=$TRANSITION_TYPE
 if [ "$TRANSITION_TYPE" = "random" ]; then
     EFFECTS=("grow" "wipe" "wave" "center" "outer" "any")
@@ -95,11 +113,14 @@ swww img "$SELECTED_WALL" \
     --transition-duration "$TRANSITION_DURATION" \
     --transition-step "$TRANSITION_STEP"
 
-# Generate colors with Wallust (quiet mode)
+# Save current wallpaper for persistence
+update_config "LAST_WALLPAPER" "$SELECTED_WALL"
+
+# Generate colors with Wallust
 wallust run -s "$SELECTED_WALL" > /dev/null 2>&1
 
-# Refresh UI components (Waybar, etc.)
-REFRESH_SCRIPT="./Refresh.sh"
+# Refresh UI components
+REFRESH_SCRIPT="$PROJECT_DIR/Refresh.sh"
 if [ ! -f "$REFRESH_SCRIPT" ]; then
     REFRESH_SCRIPT="$SCRIPTS_DIR/Refresh.sh"
 fi

@@ -2,9 +2,8 @@
 
 # =============================================================================
 # WAYBAR DYNAMIC THEME - REFRESH SCRIPT
-# Description: Gracefully restarts Waybar, Rofi, and SwayNC to apply new colors.
+# Description: Gracefully restarts Waybar, Rofi, and SwayNC and reloads GTK themes.
 # Author: JADRT22 (Fernando)
-# Enhanced with AI assistance
 # =============================================================================
 
 # --- PATH CONFIGURATION ---
@@ -12,6 +11,19 @@ WAYBAR_CONFIG_DIR="$HOME/.config/waybar"
 WAYBAR_CONFIG_FILE="$WAYBAR_CONFIG_DIR/config"
 
 # --- UTILITY FUNCTIONS ---
+
+# Function to reload GTK theme without closing windows
+reload_gtk() {
+    if command -v gsettings >/dev/null; then
+        # Get current theme
+        current_theme=$(gsettings get org.gnome.desktop.interface gtk-theme | sed "s/'//g")
+        # "Touch" the theme to force reload Wallust CSS
+        gsettings set org.gnome.desktop.interface gtk-theme "Adwaita" # Temp change
+        sleep 0.1
+        gsettings set org.gnome.desktop.interface gtk-theme "$current_theme" # Revert to original
+    fi
+}
+
 kill_processes() {
     # List of processes to be restarted
     local apps=(waybar rofi swaync ags)
@@ -54,15 +66,18 @@ else
 fi
 
 # =============================================================================
-# 3. RESTART OTHER COMPONENTS
+# 3. RESTART OTHER COMPONENTS AND RELOAD GTK
 # =============================================================================
+
+# Reload CSS for open GTK windows
+reload_gtk
 
 # Restart swaync (notifications) if installed
 if command -v swaync >/dev/null; then
     swaync >/dev/null 2>&1 &
 fi
 
-# Reload swaync settings if the client exists
+# Reload swaync settings if client exists
 if command -v swaync-client >/dev/null; then
     swaync-client --reload-config 2>/dev/null
 fi
