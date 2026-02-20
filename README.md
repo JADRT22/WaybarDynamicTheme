@@ -1,95 +1,52 @@
-# 🌈 Waybar Dynamic Theme & Layout Preservation (v3.0)
+# 🌈 Waybar Dynamic Theme & Layout Preservation
 
 > [!IMPORTANT]
-> **AI-Powered & Community Driven:** This project was built using AI to solve a personal customization challenge. I am now sharing it with the community! This version 3.0 is a major leap forward, introducing a central management hub and deeper system integration.
+> **AI-Powered & Community Driven:** This project was built entirely using AI to solve a personal customization challenge. I am now sharing it with the community! Please note that as an AI-assisted project, updates may occasionally introduce bugs, but I am committed to its serious development.
 
-This project automates wallpaper color extraction for **Waybar**, **Hyprland**, **Rofi**, **Terminals (Kitty/Ghostty)**, and **GTK Apps** while ensuring the user's **Layout** and **Style** choices are preserved.
+Automate your Hyprland aesthetic with dynamic color extraction and seamless layout preservation.
 
-## 📺 Demonstration
+## 📖 Overview
+**Waybar Dynamic Theme** is a comprehensive customization suite designed for Hyprland users. It synchronizes your entire system's color palette with your wallpaper using **Wallust**, while uniquely ensuring that your Waybar layouts and styles remain intact during the transition.
 
-### Dynamic Color Swapping
-![Dynamic Colors](assets/dynamic-colors.gif)
+Whether you switch wallpapers or change your bar's physical layout, this project ensures a cohesive, beautiful, and functional desktop experience.
 
-### Layout and Style Preservation
-| Bar Layout Switcher | GTK & Hyprland Sync |
-| :---: | :---: |
-| ![Layout Preservation](assets/layout-preservation.gif) | ![Style Variation](assets/style-variation.gif) |
+## ✨ Key Features
+- **󱄄 Theme Management Hub:** A centralized Rofi-based interface to control wallpapers, bar layouts, and animations.
+- **󰕮 Bar Layout Preservation:** Switch between multiple Waybar configurations (top, bottom, vertical, etc.) without losing your dynamic color theme.
+- **󰸉 Visual Wallpaper Picker:** Browse your wallpaper collection with high-quality thumbnails and premium transition effects via SWWW.
+- **🎨 Full System Synchronization:**
+  - **Hyprland:** Dynamic window borders, active colors, and shadows.
+  - **Waybar & Rofi:** Fully themed bars and menus based on wallpaper tones.
+  - **GTK 3/4:** Real-time CSS injection for apps like Thunar, Nautilus, and others.
+  - **Terminals:** Automatic color syncing for Kitty and Ghostty.
+  - **SwayNC & Cava:** Themed notifications and audio visualizers.
+- **⚙️ Intelligent Persistence:** Automatically saves and reapplies your last chosen wallpaper and layout.
 
-## ✨ Features (v3.0)
-- **󱄄 Central Theme Hub:** A dedicated Rofi-based menu to manage all theme aspects.
-- **󰕮 Bar Layout Switcher:** Instantaneously switch between multiple Waybar layouts while keeping the current wallpaper colors.
-- **󰵚 Transition Animations:** Choose from 6 different SWWW transition effects (Grow, Wipe, Wave, etc.) directly from the Hub.
-- **󰸉 Visual Wallpaper Picker:** Browse and select wallpapers with thumbnails via Rofi.
-- **🎨 Deep System Sync:** 
-  - **Hyprland:** Dynamic window borders and shadows.
-  - **GTK 3.0/4.0:** Real-time color updates for apps like Thunar and Nautilus.
-  - **Terminals:** Support for Kitty and Ghostty.
-  - **Rofi & SwayNC:** Fully themed notification center and menus.
-- **⚙️ Config Persistence:** Saves your last wallpaper and bar layout choices.
+## 🚀 Getting Started
 
-## 🛠️ Requirements
-- **Hyprland** (and `swww` for wallpapers)
-- **Waybar**
-- **Wallust** (v3.0+)
-- **Rofi**
-- **Gsettings** (for GTK theme reloading)
-
-## 🚀 Easy Installation Guide
-
-### 1. Clone the repository
+### 1. Installation
+Clone the repository and run the automated setup script to link all templates and scripts to your configuration folders:
 ```bash
 git clone https://github.com/JADRT22/WaybarDynamicTheme.git
 cd WaybarDynamicTheme
-```
-
-### 2. Run the Installer
-```bash
 chmod +x setup.sh
 ./setup.sh
 ```
-*This script links all templates to `~/.config/wallust/templates/` and scripts to `~/.config/hypr/scripts/`.*
 
-### 3. Wallust Templates Setup
-Add this to your `~/.config/wallust/wallust.toml` under `[templates]`:
-```toml
-[templates]
-cava.template = 'colors-cava'
-cava.target = '~/.config/cava/config'
+### 2. Wallust Configuration
+Ensure your `~/.config/wallust/wallust.toml` includes the provided templates to enable full system syncing. Refer to the project files for the complete template list.
 
-hypr.template = 'colors-hyprland.conf'
-hypr.target = '~/.config/hypr/wallust/wallust-hyprland.conf'
-
-rofi.template = 'colors-rofi.rasi'
-rofi.target = '~/.config/rofi/wallust/colors-rofi.rasi'
-
-waybar.template = 'colors-waybar.css'
-waybar.target = '~/.config/waybar/wallust/colors-waybar.css'
-
-kitty.template = 'colors-kitty.conf'
-kitty.target = '~/.config/kitty/kitty-themes/01-Wallust.conf'
-
-ghostty.template = 'colors-ghostty.conf'
-ghostty.target = '~/.config/ghostty/wallust.conf'
-
-gtk3.template = 'gtk-colors.template'
-gtk3.target = '~/.config/gtk-3.0/colors.css'
-
-gtk4.template = 'gtk-colors.template'
-gtk4.target = '~/.config/gtk-4.0/colors.css'
-```
-
-### 4. Hyprland Keybind
-Add this keybind to your Hyprland configuration (`~/.config/hypr/hyprland.conf`):
+### 3. Usage
+Add a keybind to your Hyprland configuration to access the Hub:
 ```hypr
 bind = $mainMod, G, exec, ~/.config/hypr/scripts/WaybarDynamicHub.sh
 ```
 
-## 📂 Project Structure
-- `WaybarDynamicHub.sh`: Main management menu.
-- `DynamicLayoutSwitcher.sh`: Core script for wallpaper selection and color application.
-- `Refresh.sh`: Gracefully restarts UI components and reloads GTK CSS.
-- `setup.sh`: Automated installation script.
-- `*.template`: Pre-configured Wallust templates for various system components.
+## 📂 Architecture
+- `WaybarDynamicHub.sh`: The main control center.
+- `DynamicLayoutSwitcher.sh`: Handles wallpaper selection and color generation.
+- `Refresh.sh`: Gracefully restarts system components and reloads GTK themes.
+- `setup.sh`: Streamlined installation and environment setup.
 
 ---
-*Developed by JADRT22 - Enhanced with AI assistance on Feb 20, 2026*
+*Developed by JADRT22 - Optimized for Hyprland*
