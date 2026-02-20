@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # Corrected paths for your system
-WALLPAPER_DIR="$HOME/Imagens/wallpapers"
+WALLPAPER_DIR="$(xdg-user-dir PICTURES)/wallpapers"
 SCRIPTS_DIR="$HOME/.config/hypr/scripts"
 PYTHON_SCRIPT="$SCRIPTS_DIR/dynamic_theme.py"
 WAYBAR_STYLE_DIR="$HOME/.config/waybar/style"
