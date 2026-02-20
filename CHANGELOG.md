@@ -2,6 +2,26 @@
 
 All notable changes to the **WaybarDynamicTheme** project will be documented in this file.
 
+## [v3.0.0] - 2026-02-20
+### Added
+- **Waybar Dynamic Hub:** A central Rofi-based management menu (`WaybarDynamicHub.sh`) to control all theme features.
+- **Bar Layout Switcher:** Instantaneously switch between over 40 Waybar layouts while preserving current wallpaper colors.
+- **Automated Installer:** New `setup.sh` script for dependency checking, directory creation, and automatic linking of templates/scripts.
+- **Deep Hyprland Sync:** Enabled dynamic window borders and shadows via Wallust (`colors-hyprland.conf`).
+- **Real-time GTK Sync:** Added automatic GTK 3.0/4.0 theme reloading in `Refresh.sh` (using `gsettings`).
+- **New Templates:** Added official Wallust templates for **Cava**, **SwayNC**, and **Ghostty**.
+- **Visual Improvements:** Added a transition animation selector with 6 premium SWWW effects (Grow, Wipe, Wave, etc.).
+- **Persistence:** The system now saves the `LAST_WALLPAPER` and `WAYBAR_LAYOUT` to a dedicated config file.
+
+### Changed
+- **Code Optimization:** Refactored `DynamicLayoutSwitcher.sh` and `Refresh.sh` for better performance and error handling.
+- **Language:** All internal comments and user-facing messages in the Hub are now professionally translated to English for global reach.
+- **Documentation:** Completely redesigned the `README.md` to focus on the new installation method and Hub features.
+
+### Fixed
+- **GTK Refreshing:** Solved the issue where open GTK windows wouldn't update colors until restarted.
+- **Config Management:** Implemented a robust `update_config` function to prevent configuration file corruption.
+
 ## [v2.0.0] - 2026-02-20
 ### Added
 - **Visual Previews (Thumbnails):** Rofi menu now displays image previews for each wallpaper before selection.
