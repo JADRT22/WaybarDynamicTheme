@@ -1,9 +1,15 @@
-# 🌈 Waybar Dynamic Theme & Layout Preservation
+# 🌈 WaybarDynamicTheme
+
+[![GitHub Release](https://img.shields.io/github/v/release/JADRT22/WaybarDynamicTheme?style=flat-square&color=BC8AD1)](https://github.com/JADRT22/WaybarDynamicTheme/releases)
+[![License](https://img.shields.io/github/license/JADRT22/WaybarDynamicTheme?style=flat-square&color=8AB4D1)](LICENSE)
+[![GitHub Stars](https://img.shields.io/github/stars/JADRT22/WaybarDynamicTheme?style=flat-square&color=D1BD8A)](https://github.com/JADRT22/WaybarDynamicTheme/stargazers)
+
+**Automatic dynamic theme for Waybar based on the current wallpaper, with intelligent layout and style preservation on Hyprland.**
 
 > [!IMPORTANT]
 > **AI-Powered & Community Driven:** This project was built entirely using AI to solve a personal customization challenge. I am now sharing it with the community! Please note that as an AI-assisted project, updates may occasionally introduce bugs, but I am committed to its serious development.
 
-Automate your Hyprland aesthetic with dynamic color extraction and seamless layout preservation.
+---
 
 ## 📺 Demonstration
 
@@ -15,10 +21,7 @@ Automate your Hyprland aesthetic with dynamic color extraction and seamless layo
 | :---: | :---: |
 | ![Layout Preservation](assets/layout-preservation.gif) | ![Style Variation](assets/style-variation.gif) |
 
-## 📖 Overview
-**Waybar Dynamic Theme** is a comprehensive customization suite designed for Hyprland users. It synchronizes your entire system's color palette with your wallpaper using **Wallust**, while uniquely ensuring that your Waybar layouts and styles remain intact during the transition.
-
-Whether you switch wallpapers or change your bar's physical layout, this project ensures a cohesive, beautiful, and functional desktop experience.
+---
 
 ## ✨ Key Features
 - **󱄄 Unified Management Hub:** A single script control center to manage wallpapers, bar layouts, and animations.
@@ -65,8 +68,6 @@ bind = $mainMod, R, exec, ~/.config/hypr/scripts/WaybarTheme.sh --refresh
 - `*.template`: Wallust templates for various system components.
 
 ## 📝 Full Config Example (`wallust.toml`)
-If you want to enable every feature of this project, make sure your `~/.config/wallust/wallust.toml` looks like this:
-
 ```toml
 backend = "kmeans"
 color_space = "labmixed"
