@@ -1,0 +1,10 @@
+/* ---- 🌈 WaybarDynamicTheme Rofi Template ---- */
+* {
+    background:     {{background}};
+    background-alt: rgba({{background | rgb}}, 0.85);
+    foreground:     {{foreground}};
+    primary:        {{color4}};
+    secondary:      {{color5}};
+    accent:         {{color2}};
+    urgent:         {{color1}};
+}

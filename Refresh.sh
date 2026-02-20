@@ -1,48 +1,47 @@
 #!/usr/bin/env bash
-# /* ---- 💫 https://github.com/JaKooLit 💫 ---- */  ##
-# Scripts for refreshing waybar, rofi, swaync, wallust with increased flexibility
 
 # =============================================================================
-# PATH CONFIGURATION
+# WAYBAR DYNAMIC THEME - REFRESH SCRIPT
+# Description: Gracefully restarts Waybar, Rofi, and SwayNC to apply new colors.
+# Author: JADRT22 (Fernando)
+# Enhanced with AI assistance
 # =============================================================================
+
+# --- PATH CONFIGURATION ---
 WAYBAR_CONFIG_DIR="$HOME/.config/waybar"
 WAYBAR_CONFIG_FILE="$WAYBAR_CONFIG_DIR/config"
-SCRIPTSDIR="$HOME/.config/hypr/scripts"
-UserScripts="$HOME/.config/hypr/UserScripts"
+
+# --- UTILITY FUNCTIONS ---
+kill_processes() {
+    # List of processes to be restarted
+    local apps=(waybar rofi swaync ags)
+    
+    for app in "${apps[@]}"; do
+        if pidof "${app}" >/dev/null; then
+            pkill "${app}"
+        fi
+    done
+
+    # Force kill if still alive after pause
+    sleep 0.5
+    for app in "${apps[@]}"; do
+        if pidof "${app}" >/dev/null; then
+            killall -9 "${app}" 2>/dev/null
+        fi
+    done
+}
 
 # =============================================================================
 # 1. KILL RUNNING PROCESSES
 # =============================================================================
-# List of processes to be restarted
-_ps=(waybar rofi swaync ags)
-
-for _prs in "${_ps[@]}"; do
-  if pidof "${_prs}" >/dev/null; then
-    pkill "${_prs}"
-  fi
-done
-
-# Kill extra instances of cava (Waybar audio module)
-if command -v killall >/dev/null; then
-    killall cava 2>/dev/null
-fi
-
-# Short pause to ensure graceful termination
-sleep 0.5
-
-# Force kill if still alive
-for _prs in "${_ps[@]}"; do
-  if pidof "${_prs}" >/dev/null; then
-    killall -9 "${_prs}" 2>/dev/null
-  fi
-done
+kill_processes
 
 # =============================================================================
 # 2. RESTART WAYBAR WITH CURRENT CONFIG
 # =============================================================================
 if [ -L "$WAYBAR_CONFIG_FILE" ]; then
     CURRENT_CONFIG=$(readlink -f "$WAYBAR_CONFIG_FILE")
-    # Try starting Waybar with the resolved file
+    # Start Waybar with the resolved file
     if [ -f "$CURRENT_CONFIG" ]; then
         waybar -c "$CURRENT_CONFIG" &
     else
@@ -50,7 +49,7 @@ if [ -L "$WAYBAR_CONFIG_FILE" ]; then
         waybar &
     fi
 else
-    # If not a symlink, try the default file
+    # If not a symlink, use the default file
     waybar &
 fi
 
@@ -66,13 +65,6 @@ fi
 # Reload swaync settings if the client exists
 if command -v swaync-client >/dev/null; then
     swaync-client --reload-config 2>/dev/null
-fi
-
-# =============================================================================
-# 4. EXECUTE USER SCRIPTS (EXTENSIONS)
-# =============================================================================
-if [ -f "${UserScripts}/RainbowBorders.sh" ]; then
-  "${UserScripts}/RainbowBorders.sh" &
 fi
 
 exit 0

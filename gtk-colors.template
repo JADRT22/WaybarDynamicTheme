@@ -1,0 +1,24 @@
+/* ---- 🌈 WaybarDynamicTheme GTK Universal Template ---- */
+@define-color theme_bg_color {{background}};
+@define-color theme_fg_color {{foreground}};
+@define-color theme_selected_bg_color {{color2}};
+@define-color theme_selected_fg_color {{foreground}};
+@define-color base_color {{background}};
+@define-color text_color {{foreground}};
+
+/* Forçar cores em seletores comuns do Thunar */
+* {
+    background-color: @theme_bg_color;
+    color: @theme_fg_color;
+}
+
+*:selected {
+    background-color: @theme_selected_bg_color;
+    color: @theme_selected_fg_color;
+}
+
+/* Sidebar e Treeview */
+.sidebar, treeview, list {
+    background-color: shade(@theme_bg_color, 0.95);
+    color: @theme_fg_color;
+}
