@@ -54,5 +54,39 @@ bind = $mainMod, R, exec, ~/.config/hypr/scripts/WaybarTheme.sh --refresh
 - `setup.sh`: Streamlined installation and environment setup.
 - `*.template`: Wallust templates for various system components.
 
+## 📝 Full Config Example (`wallust.toml`)
+If you want to enable every feature of this project, make sure your `~/.config/wallust/wallust.toml` looks like this:
+
+```toml
+backend = "kmeans"
+color_space = "labmixed"
+palette = "dark16"
+
+[templates]
+cava.template = 'colors-cava'
+cava.target = '~/.config/cava/config'
+
+hypr.template = 'colors-hyprland.conf'
+hypr.target = '~/.config/hypr/wallust/wallust-hyprland.conf'
+
+rofi.template = 'rofi-colors.rasi'
+rofi.target = '~/.config/rofi/wallust/colors-rofi.rasi'
+
+waybar.template = 'waybar-colors.template'
+waybar.target = '~/.config/waybar/wallust/colors-waybar.css'
+
+kitty.template = 'colors-kitty.conf'
+kitty.target = '~/.config/kitty/kitty-themes/01-Wallust.conf'
+
+ghostty.template = 'colors-ghostty.conf'
+ghostty.target = '~/.config/ghostty/wallust.conf'
+
+gtk3.template = 'gtk-colors.template'
+gtk3.target = '~/.config/gtk-3.0/colors.css'
+
+gtk4.template = 'gtk-colors.template'
+gtk4.target = '~/.config/gtk-4.0/colors.css'
+```
+
 ---
 *Developed by JADRT22 - Optimized for Hyprland*
