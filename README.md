@@ -11,7 +11,7 @@ Automate your Hyprland aesthetic with dynamic color extraction and seamless layo
 Whether you switch wallpapers or change your bar's physical layout, this project ensures a cohesive, beautiful, and functional desktop experience.
 
 ## ✨ Key Features
-- **󱄄 Theme Management Hub:** A centralized Rofi-based interface to control wallpapers, bar layouts, and animations.
+- **󱄄 Unified Management Hub:** A single script control center to manage wallpapers, bar layouts, and animations.
 - **󰕮 Bar Layout Preservation:** Switch between multiple Waybar configurations (top, bottom, vertical, etc.) without losing your dynamic color theme.
 - **󰸉 Visual Wallpaper Picker:** Browse your wallpaper collection with high-quality thumbnails and premium transition effects via SWWW.
 - **🎨 Full System Synchronization:**
@@ -39,14 +39,18 @@ Ensure your `~/.config/wallust/wallust.toml` includes the provided templates to 
 ### 3. Usage
 Add a keybind to your Hyprland configuration to access the Hub:
 ```hypr
-bind = $mainMod, G, exec, ~/.config/hypr/scripts/WaybarDynamicHub.sh
+# Open the main hub
+bind = $mainMod, G, exec, ~/.config/hypr/scripts/WaybarTheme.sh
+
+# Other direct commands (optional)
+bind = $mainMod, R, exec, ~/.config/hypr/scripts/WaybarTheme.sh --refresh
+bind = $mainMod, W, exec, ~/.config/hypr/scripts/WaybarTheme.sh --switch
 ```
 
 ## 📂 Architecture
-- `WaybarDynamicHub.sh`: The main control center.
-- `DynamicLayoutSwitcher.sh`: Handles wallpaper selection and color generation.
-- `Refresh.sh`: Gracefully restarts system components and reloads GTK themes.
+- `WaybarTheme.sh`: The unified script that handles all tasks (Refresh, Wallpaper Switcher, Layout Selector, and Hub).
 - `setup.sh`: Streamlined installation and environment setup.
+- `*.template`: Wallust templates for various system components.
 
 ---
 *Developed by JADRT22 - Optimized for Hyprland*
