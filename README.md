@@ -1,4 +1,5 @@
 # 🌈 WaybarDynamicTheme
+### *Desktop Aura Synchronization with Zero-Loss Layout Switching*
 
 [![GitHub Release](https://img.shields.io/github/v/release/JADRT22/WaybarDynamicTheme?style=for-the-badge&color=BC8AD1)](https://github.com/JADRT22/WaybarDynamicTheme/releases)
 [![License](https://img.shields.io/github/license/JADRT22/WaybarDynamicTheme?style=for-the-badge&color=8AB4D1)](LICENSE)
@@ -6,8 +7,13 @@
 
 **Automatic dynamic theme for Waybar based on the current wallpaper, with intelligent layout and style preservation on Hyprland.**
 
-> [!IMPORTANT]
-> **AI-Powered & Community Driven:** This project was built entirely using AI to solve a personal customization challenge. I am now sharing it with the community! Please note that as an AI-assisted project, updates may occasionally introduce bugs, but I am committed to its serious development.
+---
+
+## 💡 Why WaybarDynamicTheme?
+
+While many scripts generate colors from wallpapers, **WaybarDynamicTheme** is designed for users who care about consistency. Most tools break your Waybar layout when switching themes; this project introduces **Zero-Loss Layout Switching**, ensuring your custom modules and bar positions remain intact while the colors adapt perfectly to your environment.
+
+It acts as a **Full-System Palette Injector**, synchronizing everything from window borders to notification styles in a single unified workflow.
 
 ---
 
