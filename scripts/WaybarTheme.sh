@@ -143,11 +143,14 @@ switch_wallpaper() {
 switch_layout() {
     [ ! -d "$WAYBAR_LAYOUTS_DIR" ] && return
     
-    # Prepara a lista com a opção de voltar
+    # Prepare the list with the back option
     layouts=$(ls "$WAYBAR_LAYOUTS_DIR" | sort)
     options="󰌍 Back to Hub\n$layouts"
     
-    choice=$(echo -e "$options" | rofi -dmenu -i -p "󰕮 Choose Layout" -config "$ROFI_CONFIG")
+    choice=$(echo -e "$options" | rofi -dmenu -i -p "󰕮 Choose Layout" \
+        -theme-str 'listview { columns: 1; }' \
+        -theme-str 'element-text { horizontal-align: 0; }' \
+        -config "$ROFI_CONFIG")
     
     if [ -z "$choice" ] || [ "$choice" == "󰌍 Back to Hub" ]; then
         show_hub
@@ -166,7 +169,10 @@ switch_layout() {
 
 show_transition_menu() {
     options="󰌍 Back to Hub\n󰈈 Random\n󰈈 Grow\n󰈈 Wipe\n󰈈 Wave\n󰈈 Center\n󰈈 Outer"
-    choice=$(echo -e "$options" | rofi -dmenu -i -p "󰵚 Transition" -config "$ROFI_CONFIG")
+    choice=$(echo -e "$options" | rofi -dmenu -i -p "󰵚 Transition" \
+        -theme-str 'listview { columns: 1; }' \
+        -theme-str 'element-text { horizontal-align: 0; }' \
+        -config "$ROFI_CONFIG")
     
     if [ -z "$choice" ] || [ "$choice" == "󰌍 Back to Hub" ]; then
         show_hub
@@ -177,13 +183,16 @@ show_transition_menu() {
         new_type=$(echo "$choice" | awk '{print tolower($2)}')
         update_config "TRANSITION_TYPE" "$new_type"
         notify-send "Theme" "Transition set to: $new_type"
-        show_hub # Volta ao hub após selecionar
+        show_hub # Return to hub after selection
     fi
 }
 
 show_hub() {
     options="󰸉 Select Wallpaper\n󰕮 Select Bar Layout\n󰵚 Transition Animations\n󰑐 Refresh Theme\n󰒓 Project Info"
-    choice=$(echo -e "$options" | rofi -dmenu -i -p "󱄄 Theme Hub" -config "$ROFI_CONFIG")
+    choice=$(echo -e "$options" | rofi -dmenu -i -p "󱄄 Theme Hub" \
+        -theme-str 'listview { columns: 1; }' \
+        -theme-str 'element-text { horizontal-align: 0; }' \
+        -config "$ROFI_CONFIG")
     
     case "$choice" in
         *"Select Wallpaper"*) switch_wallpaper ;;

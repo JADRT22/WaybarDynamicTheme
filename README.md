@@ -1,8 +1,8 @@
 # 🌈 WaybarDynamicTheme
 
-[![GitHub Release](https://img.shields.io/github/v/release/JADRT22/WaybarDynamicTheme?style=flat-square&color=BC8AD1)](https://github.com/JADRT22/WaybarDynamicTheme/releases)
-[![License](https://img.shields.io/github/license/JADRT22/WaybarDynamicTheme?style=flat-square&color=8AB4D1)](LICENSE)
-[![GitHub Stars](https://img.shields.io/github/stars/JADRT22/WaybarDynamicTheme?style=flat-square&color=D1BD8A)](https://github.com/JADRT22/WaybarDynamicTheme/stargazers)
+[![GitHub Release](https://img.shields.io/github/v/release/JADRT22/WaybarDynamicTheme?style=for-the-badge&color=BC8AD1)](https://github.com/JADRT22/WaybarDynamicTheme/releases)
+[![License](https://img.shields.io/github/license/JADRT22/WaybarDynamicTheme?style=for-the-badge&color=8AB4D1)](LICENSE)
+[![GitHub Stars](https://img.shields.io/github/stars/JADRT22/WaybarDynamicTheme?style=for-the-badge&color=D1BD8A)](https://github.com/JADRT22/WaybarDynamicTheme/stargazers)
 
 **Automatic dynamic theme for Waybar based on the current wallpaper, with intelligent layout and style preservation on Hyprland.**
 
@@ -26,14 +26,31 @@
 ## ✨ Key Features
 - **󱄄 Unified Management Hub:** A single script control center to manage wallpapers, bar layouts, and animations.
 - **󰕮 Bar Layout Preservation:** Switch between multiple Waybar configurations (top, bottom, vertical, etc.) without losing your dynamic color theme.
-- **󰸉 Visual Wallpaper Picker:** Browse your wallpaper collection with high-quality thumbnails and premium transition effects via SWWW.
+- **󰸉 Visual Wallpaper Picker:** Browse your wallpaper collection with high-quality thumbnails and premium transition effects via **SWWW**.
 - **🎨 Full System Synchronization:**
   - **Hyprland:** Dynamic window borders, active colors, and shadows.
   - **Waybar & Rofi:** Fully themed bars and menus based on wallpaper tones.
   - **GTK 3/4:** Real-time CSS injection for apps like Thunar, Nautilus, and others.
   - **Terminals:** Automatic color syncing for Kitty and Ghostty.
   - **SwayNC & Cava:** Themed notifications and audio visualizers.
-- **⚙️ Intelligent Persistence:** Automatically saves and reapplies your last chosen wallpaper and layout.
+- **⚙️ Intelligent Persistence:** Automatically saves and reapplies your last chosen wallpaper and layout on startup.
+
+---
+
+## 🛠️ Prerequisites & Dependencies
+
+To ensure full functionality, make sure you have the following installed:
+
+| Component | Package | Description |
+| :--- | :--- | :--- |
+| **Wallpaper Engine** | `swww` | For smooth wallpaper transitions. |
+| **Menu System** | `rofi-wayland` | For the wallpaper picker and hub UI. |
+| **Status Bar** | `waybar` | The main dynamic bar. |
+| **Color Engine** | `wallust` | Generates color palettes from images. |
+| **Notification** | `swaync` | Dynamic notification styling. |
+| **Visualizer** | `cava` | Audio visualizer color syncing. |
+
+---
 
 ## 🚀 Getting Started
 
@@ -62,10 +79,14 @@ bind = $mainMod SHIFT, H, exec, ~/.config/hypr/scripts/WaybarTheme.sh --hub
 bind = $mainMod, R, exec, ~/.config/hypr/scripts/WaybarTheme.sh --refresh
 ```
 
+---
+
 ## 📂 Architecture
 - `scripts/WaybarTheme.sh`: The unified script that handles all tasks (Refresh, Wallpaper Switcher, Layout Selector, and Hub).
 - `setup.sh`: Streamlined installation and environment setup.
 - `*.template`: Wallust templates for various system components.
+
+---
 
 ## 📝 Full Config Example (`wallust.toml`)
 ```toml
