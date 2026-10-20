@@ -7,6 +7,8 @@
 
 **Automatic dynamic theme for Waybar based on the current wallpaper, with intelligent layout and style preservation on Hyprland.**
 
+> **Project status:** WaybarDynamicTheme is a secondary project. My focus has moved to other work — mainly [LinuxTask](https://github.com/JADRT22/LinuxTask) — so updates here are limited to important fixes, usually when a system update breaks the script. My preferences also moved toward simpler setups: automation, agents, and X11 desktops such as XFCE (my current one, among others). If you like this project, it is here to stay, and bug reports are always welcome on the [issues page](https://github.com/JADRT22/WaybarDynamicTheme/issues) — I review them regularly.
+
 ---
 
 ## 💡 Why WaybarDynamicTheme?
