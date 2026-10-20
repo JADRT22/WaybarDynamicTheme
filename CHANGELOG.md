@@ -2,6 +2,23 @@
 
 All notable changes to the **WaybarDynamicTheme** project will be documented in this file.
 
+## [v4.1.0] - 2026-10-20
+### Added
+- **Restore on login:** new `--restore` mode that reapplies your last wallpaper and palette instantly at session start, without restarting Waybar.
+- **Modern Waybar configs:** the script now detects and uses `config.jsonc` when your Waybar setup uses that filename, and falls back to `config`.
+- **`SKIP_SEQUENCES` option:** set it to `1` in `~/.config/WaybarDynamicTheme/config.conf` to keep wallust from touching terminal appearances.
+- **`wallust.toml.example`:** a ready-to-use configuration file with the correct template names, linked automatically by `setup.sh` when you don't have one yet.
+
+### Changed
+- **Wallust behavior:** terminal color sequences are now kept by default, so Kitty and Ghostty stay in sync. Users who preferred the old, colors-only behavior can set `SKIP_SEQUENCES=1`.
+- **Setup script:** works from any directory, links the script into `~/.local/bin`, verifies `notify-send`, only warns about the optional `swaync`, and never overwrites an existing `wallust.toml`.
+
+### Fixed
+- **Wallpaper picker selection:** choosing a wallpaper with spaces in its name (or duplicate names in different folders) no longer opens the wrong image.
+- **SwayNC reload:** the notification daemon now gets enough time to start before being reloaded.
+- **Stability:** strict-mode guards mean pressing Escape in any menu, or a tool returning "nothing to kill", never closes the hub.
+- **README:** the template name for Rofi now matches the real file (`rofi-colors.template`).
+
 ## [v4.0.0] - 2026-02-20
 ### Added
 - **Major Architecture Upgrade:** Consistently unified all scripts into `WaybarTheme.sh`.

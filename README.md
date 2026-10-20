@@ -85,6 +85,14 @@ bind = $mainMod SHIFT, H, exec, ~/.config/hypr/scripts/WaybarTheme.sh --hub
 bind = $mainMod, R, exec, ~/.config/hypr/scripts/WaybarTheme.sh --refresh
 ```
 
+#### Restore on login
+Reapply the last wallpaper and its colors when the session starts (no animation):
+```hypr
+exec-once = ~/.config/hypr/scripts/WaybarTheme.sh --restore
+# swww-daemon must be autostarted as well (or started by the script itself)
+exec-once = swww-daemon
+```
+
 ---
 
 ## 📂 Architecture
@@ -107,7 +115,7 @@ cava.target = '~/.config/cava/config'
 hypr.template = 'colors-hyprland.conf'
 hypr.target = '~/.config/hypr/wallust/wallust-hyprland.conf'
 
-rofi.template = 'rofi-colors.rasi'
+rofi.template = 'rofi-colors.template'
 rofi.target = '~/.config/rofi/wallust/colors-rofi.rasi'
 
 waybar.template = 'waybar-colors.template'

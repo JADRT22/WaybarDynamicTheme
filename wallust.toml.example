@@ -1,0 +1,51 @@
+# =============================================================================
+# WaybarDynamicTheme - Wallust configuration example
+# -----------------------------------------------------------------------------
+# Link or copy this file to ~/.config/wallust/wallust.toml and adjust the
+# targets to match your setup. setup.sh links it automatically when you do
+# not have a wallust.toml yet (it never overwrites an existing one).
+#
+# The template paths below are the names deployed by setup.sh into
+# ~/.config/wallust/templates/.
+# =============================================================================
+
+backend = "kmeans"
+color_space = "labmixed"
+palette = "dark16"
+
+[templates]
+cava.template = 'colors-cava'
+cava.target = '~/.config/cava/config'
+
+hypr.template = 'colors-hyprland.conf'
+hypr.target = '~/.config/hypr/wallust/wallust-hyprland.conf'
+
+rofi.template = 'rofi-colors.template'
+rofi.target = '~/.config/rofi/wallust/colors-rofi.rasi'
+
+waybar.template = 'waybar-colors.template'
+waybar.target = '~/.config/waybar/wallust/colors-waybar.css'
+
+kitty.template = 'colors-kitty.conf'
+kitty.target = '~/.config/kitty/kitty-themes/01-Wallust.conf'
+
+ghostty.template = 'colors-ghostty.conf'
+ghostty.target = '~/.config/ghostty/wallust.conf'
+
+gtk3.template = 'gtk-colors.template'
+gtk3.target = '~/.config/gtk-3.0/colors.css'
+
+gtk4.template = 'gtk-colors.template'
+gtk4.target = '~/.config/gtk-4.0/colors.css'
+
+# --- Optional entries ---
+# SwayNC: the generated file has to be imported from your own swaync
+# style.css (e.g. `@import "wallust/colors-swaync.css";`), so the target
+# depends on your notification setup. Uncomment and adjust if you use it.
+# swaync.template = 'colors-swaync.css'
+# swaync.target = '~/.config/swaync/wallust/colors-swaync.css'
+
+# Generic JSON palette: only useful for other tools that read colors from a
+# JSON file. Uncomment and point the target wherever that tool expects it.
+# json.template = 'json.template'
+# json.target = '~/.config/wallust/colors.json'
